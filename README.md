@@ -1,6 +1,6 @@
 # App Chatbot IVY v2.0
 
-Flutter project.
+Flutter v2.5.1.
 
 ## Getting Started
 
