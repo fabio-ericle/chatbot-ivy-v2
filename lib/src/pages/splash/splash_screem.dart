@@ -11,8 +11,12 @@ class SplashScreem extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const HomePage())));
 
     return const Scaffold(
+      backgroundColor: Colors.blue,
       body: Center(
-        child: Text("Splash Screem"),
+        child: Text(
+          "Splash Screem",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }

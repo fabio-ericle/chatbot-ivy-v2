@@ -14,10 +14,20 @@ class ChatMessageCard extends StatelessWidget {
   }
 
   Widget _showSendMessage() {
-    return Container();
+    return Container(
+      height: 20,
+      width: 100,
+      color: Colors.blueGrey,
+      child: const Text("Teste"),
+    );
   }
 
   Widget _showReceiveMessage() {
-    return Container();
+    return Container(
+      height: 20,
+      width: 100,
+      color: Colors.blueGrey,
+      child: const Text("Teste"),
+    );
   }
 }

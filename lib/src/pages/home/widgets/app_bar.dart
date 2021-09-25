@@ -4,16 +4,20 @@ class AppBarWidget extends PreferredSize {
   AppBarWidget({Key? key})
       : super(
           key: key,
-          preferredSize: const Size.fromHeight(250),
+          preferredSize: const Size.fromHeight(100),
           child: SizedBox(
-            height: double.maxFinite,
+            height: 100,
             width: double.maxFinite,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              child: Row(
-                children: const <Widget>[
-                  Text("AppBar"),
-                ],
+            child: Container(
+              color: Colors.blue,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    Center(child: Text("AppBar")),
+                  ],
+                ),
               ),
             ),
           ),
