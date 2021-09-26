@@ -34,10 +34,10 @@ class _ChatPageState extends State<ChatPage> {
       WatsonAssistantV2Credential(
     version: '2019-02-28',
     username: 'apikey',
-    apikey: 'c2OcbRIDHaaXXwgN7PhsiLbYmTiF-fnXX9uLuhEOb4tG',
-    assistantID: '23d92e2b-be5e-49d8-a96f-892155761ec2',
+    apikey: '',
+    assistantID: '',
     url:
-        'https://api.us-south.assistant.watson.cloud.ibm.com/instances/d2a87220-3c73-4a69-b741-e624fb11bd14/v2',
+        '',
   );
   late WatsonAssistantApiV2 watsonAssistant;
   late WatsonAssistantResponse watsonAssistantResponse;
