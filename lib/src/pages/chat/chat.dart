@@ -123,7 +123,7 @@ class _ChatPageState extends State<ChatPage> {
         },
         icon: const Icon(
           Icons.send,
-          color: Colors.blue,
+          color: Colors.red,
         ),
       ),
     );
