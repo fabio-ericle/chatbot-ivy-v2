@@ -60,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
       body: Column(
-        children: [_buildList(), _buildUserInput()],
+        children: [_buildList(), _buildUserInput(),],
       ),
     );
   }
@@ -123,7 +123,7 @@ class _ChatPageState extends State<ChatPage> {
         },
         icon: const Icon(
           Icons.send,
-          color: Colors.red,
+          color: Colors.blue,
         ),
       ),
     );
