@@ -1,7 +1,7 @@
 import 'package:app_ivy_v2/src/model/chat_model.dart';
+import 'package:app_ivy_v2/src/service/config.dart';
 import 'package:app_ivy_v2/src/service/watson_assistant.dart';
 import 'package:flutter/material.dart';
-
 import 'widgets/chat_message_card.dart';
 
 class ChatPage extends StatefulWidget {
@@ -30,15 +30,7 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
-  WatsonAssistantV2Credential watsonAssistantV2Credential =
-      WatsonAssistantV2Credential(
-    version: '2019-02-28',
-    username: 'apikey',
-    apikey: '',
-    assistantID: '',
-    url:
-        '',
-  );
+  WatsonAssistantV2Credential watsonAssistantV2Credential = credential;
   late WatsonAssistantApiV2 watsonAssistant;
   late WatsonAssistantResponse watsonAssistantResponse;
   WatsonAssitantContext watsonAssitantContext =
@@ -60,7 +52,10 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
       body: Column(
-        children: [_buildList(), _buildUserInput(),],
+        children: [
+          _buildList(),
+          _buildUserInput(),
+        ],
       ),
     );
   }
@@ -142,15 +137,22 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Future _callWatsonAssistant({required String text}) async {
+  Future<void> _callWatsonAssistant({required String text}) async {
     _addMessage(text: 'Escrevendo...', type: ChatMessageType.receiveText);
-    watsonAssistantResponse =
-        await watsonAssistant.sendMessage(textInput: text);
+    watsonAssistantResponse = await watsonAssistant.sendMessage(
+        textInput: text, watsonAssitantContext: watsonAssitantContext);
     setState(() {
-      _text = watsonAssistantResponse.resultText;
+      _text = watsonAssistantResponse.responseText;
       _messageList.removeAt(0);
     });
 
-    _addMessage(text: "YVY: ${_text!}", type: ChatMessageType.receiveText);
+    print('Text: ${watsonAssistantResponse.responseText}');
+    print('Image: ${watsonAssistantResponse.responseImage}');
+    print('Option: ${watsonAssistantResponse.responseOptions}');
+
+    _addMessage(
+        text: _text != null ? _text! : '', type: ChatMessageType.receiveText);
+
+    //watsonAssitantContext = watsonAssistantResponse.context!;
   }
 }
