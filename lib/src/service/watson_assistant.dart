@@ -59,7 +59,7 @@ class WatsonAssistantApiV2 {
       required WatsonAssitantContext watsonAssitantContext}) async {
     try {
       List<String> urlBase = watsonAssistantV2Credential.url.split('https://');
-      List<String> pathURL = urlBase[0].split('/');
+      List<String> pathURL = urlBase[1].split('/');
       String url = pathURL[0];
       String instance = pathURL[1];
       String urlPath = pathURL[2];
