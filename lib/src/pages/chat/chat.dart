@@ -14,7 +14,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final _messageList = <ChatMessage>[];
   final TextEditingController _controllerText = TextEditingController();
-  String? _text;
+  String? _responseText;
 
   @override
   void initState() {
@@ -60,8 +60,12 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void _addMessage({required String text, required ChatMessageType type}) {
-    var message = ChatMessage(text: text, type: type);
+  void _addMessage(
+      {required String text,
+      required ChatMessageType type,
+      Map<String, dynamic>? option,
+      String? src}) {
+    var message = ChatMessage(text: text, type: type, option: option, src: src);
     setState(() {
       _messageList.insert(0, message);
     });
@@ -142,16 +146,34 @@ class _ChatPageState extends State<ChatPage> {
     watsonAssistantResponse = await watsonAssistant.sendMessage(
         textInput: text, watsonAssitantContext: watsonAssitantContext);
     setState(() {
-      _text = watsonAssistantResponse.responseText;
+      _responseText = watsonAssistantResponse.responseText;
       _messageList.removeAt(0);
     });
 
-    print('Text: ${watsonAssistantResponse.responseText}');
-    print('Image: ${watsonAssistantResponse.responseImage}');
-    print('Option: ${watsonAssistantResponse.responseOptions}');
+    switch (watsonAssistantResponse.responseType) {
+      case 'text':
+        _addMessage(
+            text: _responseText != null ? _responseText! : '',
+            type: ChatMessageType.receiveText);
+        break;
+      case 'option':
+        _addMessage(
+            text: '',
+            option: watsonAssistantResponse.responseOptions,
+            type: ChatMessageType.receiveOption);
+        break;
+      case 'image':
+        _addMessage(
+            text: _responseText != null ? _responseText! : '',
+            type: ChatMessageType.receiveImage,
+            src: "");
+        break;
+    }
 
-    _addMessage(
-        text: _text != null ? _text! : '', type: ChatMessageType.receiveText);
+    // print('Text: ${watsonAssistantResponse.responseText}');
+    // print('Image: ${watsonAssistantResponse.responseImage}');
+    // print('Option: ${watsonAssistantResponse.responseOptions}');
+    // print('Suggestion: ${watsonAssistantResponse.reponseSuggestion}');
 
     //watsonAssitantContext = watsonAssistantResponse.context!;
   }

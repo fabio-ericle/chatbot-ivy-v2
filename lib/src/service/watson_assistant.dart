@@ -34,15 +34,17 @@ class WatsonAssitantContext {
 class WatsonAssistantResponse {
   String? responseText;
   String? responseImage;
-  String? responseOptions;
   String responseType;
+  Map<String, dynamic>? responseOptions;
+  Map<String, dynamic>? reponseSuggestion;
   WatsonAssitantContext? context;
 
   WatsonAssistantResponse({
     this.responseText,
     this.responseImage,
-    this.responseOptions,
     required this.responseType,
+    this.responseOptions,
+    this.reponseSuggestion,
     this.context,
   });
 }
@@ -97,25 +99,27 @@ class WatsonAssistantApiV2 {
 
       var parseJsonSessionId = json.decode(_getSessionId.body);
       String sessionId = parseJsonSessionId['session_id'];
+
       var receivedJson = await http.post(
         Uri.https(url, '/$urlWatsonAssistant/$sessionId/message',
             {"version": watsonAssistantV2Credential.version}),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'Basic $token'
+          HttpHeaders.authorizationHeader: 'Basic $token'
         },
         body: json.encode(_body),
       );
+
       String? _watsonResponseText;
       String? _watsonResponseImage;
-      String? _watsonResponseOptions;
+      Map<String, dynamic>? _watsonResponseOptions;
+      Map<String, dynamic>? _watsonReponseSuggestion;
       String _watsonResponseType;
 
       var getParsedJson = json.decode(receivedJson.body);
-      var _responseType =
-          getParsedJson['output']['generic'][0]['response_type'];
+      var _responseType = getParsedJson['output']['generic'][0]['suggestions'];
       _watsonResponseType = _responseType;
-
+      // print(getParsedJson['output']['generic'][0]['response_type']);
       switch (_responseType) {
         case 'text':
           _watsonResponseText = getParsedJson['output']['generic'][0]['text'];
@@ -125,8 +129,10 @@ class WatsonAssistantApiV2 {
               jsonEncode(getParsedJson['output']['generic'][0]);
           break;
         case 'option':
-          _watsonResponseOptions =
-              jsonEncode(getParsedJson['output']['generic'][0]);
+          _watsonResponseOptions = getParsedJson['output']['generic'][0];
+          break;
+        case 'suggestion':
+          _watsonReponseSuggestion = getParsedJson['output']['generic'][0];
           break;
       }
 
@@ -140,7 +146,8 @@ class WatsonAssistantApiV2 {
           responseText: _watsonResponseText,
           responseImage: _watsonResponseImage,
           responseOptions: _watsonResponseOptions,
-          responseType: _watsonResponseType);
+          responseType: _watsonResponseType,
+          reponseSuggestion: _watsonReponseSuggestion);
       return watsonAssistantResult;
     } catch (err) {
       WatsonAssistantResponse watsonAssistantResult = WatsonAssistantResponse(

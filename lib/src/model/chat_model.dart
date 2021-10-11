@@ -4,7 +4,7 @@ class ChatMessage {
   final String? name;
   final String? text;
   final String? src;
-  final String? option;
+  Map<String, dynamic>? option;
   final ChatMessageType type;
 
   ChatMessage(
