@@ -6,12 +6,12 @@ import 'package:app_ivy_v2/src/model/chat_model.dart';
 
 class ChatMessageCard extends StatelessWidget {
   final ChatMessage? chatMessage;
-  final VoidCallback? onTap;
+  final Future<void>? onClick;
 
   const ChatMessageCard({
     Key? key,
     this.chatMessage,
-    this.onTap,
+    this.onClick,
   }) : super(key: key);
 
   @override
@@ -62,7 +62,7 @@ class ChatMessageCard extends StatelessWidget {
   Widget _showReceivedMessageOptions(BuildContext context) {
     int count =
         jsonEncode(chatMessage!.option!['options']).split('label').length;
-    print(count);
+    // print(count);
     return Container(
       margin:
           const EdgeInsets.only(left: 20.0, right: 40.0, top: 5.0, bottom: 5.0),
@@ -76,7 +76,7 @@ class ChatMessageCard extends StatelessWidget {
               itemCount: count - 1,
               itemBuilder: (context, int index) {
                 return InkWell(
-                  onTap: onTap,
+                  onTap: () {},
                   child: Container(
                     height: 30.0,
                     width: double.infinity,
@@ -99,8 +99,8 @@ class ChatMessageCard extends StatelessWidget {
     return SizedBox(
       width: 200,
       height: 100,
-      child: chatMessage!.src == null
-          ? Image.network(chatMessage!.src!)
+      child: chatMessage!.image == null
+          ? Image.network(chatMessage!.image!['src'])
           : Container(),
     );
   }
