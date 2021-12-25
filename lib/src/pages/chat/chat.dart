@@ -64,8 +64,9 @@ class _ChatPageState extends State<ChatPage> {
       {required String text,
       required ChatMessageType type,
       Map<String, dynamic>? option,
-      String? src}) {
-    var message = ChatMessage(text: text, type: type, option: option, src: src);
+      Map<String, dynamic>? image}) {
+    var message =
+        ChatMessage(text: text, type: type, option: option, image: image);
     setState(() {
       _messageList.insert(0, message);
     });
@@ -165,8 +166,8 @@ class _ChatPageState extends State<ChatPage> {
       case 'image':
         _addMessage(
             text: _responseText != null ? _responseText! : '',
-            type: ChatMessageType.receiveImage,
-            src: "");
+            image: watsonAssistantResponse.responseImage,
+            type: ChatMessageType.receiveImage);
         break;
     }
 
