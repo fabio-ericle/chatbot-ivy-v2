@@ -33,8 +33,8 @@ class WatsonAssitantContext {
 
 class WatsonAssistantResponse {
   String? responseText;
-  String? responseImage;
   String responseType;
+  Map<String, dynamic>? responseImage;
   Map<String, dynamic>? responseOptions;
   Map<String, dynamic>? reponseSuggestion;
   WatsonAssitantContext? context;
@@ -111,7 +111,7 @@ class WatsonAssistantApiV2 {
       );
 
       String? _watsonResponseText;
-      String? _watsonResponseImage;
+      Map<String, dynamic>? _watsonResponseImage;
       Map<String, dynamic>? _watsonResponseOptions;
       Map<String, dynamic>? _watsonReponseSuggestion;
       String _watsonResponseType;
@@ -125,8 +125,7 @@ class WatsonAssistantApiV2 {
           _watsonResponseText = getParsedJson['output']['generic'][0]['text'];
           break;
         case 'image':
-          _watsonResponseImage =
-              jsonEncode(getParsedJson['output']['generic'][0]);
+          _watsonResponseImage = getParsedJson['output']['generic'][0];
           break;
         case 'option':
           _watsonResponseOptions = getParsedJson['output']['generic'][0];
