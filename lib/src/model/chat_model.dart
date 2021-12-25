@@ -3,14 +3,15 @@ enum ChatMessageType { send, receiveText, receiveImage, receiveOption }
 class ChatMessage {
   final String? name;
   final String? text;
-  final String? src;
-  Map<String, dynamic>? option;
+  final Map<String, dynamic>? image;
+  final Map<String, dynamic>? option;
   final ChatMessageType type;
 
-  ChatMessage(
-      {this.name,
-      this.text,
-      this.src,
-      this.option,
-      this.type = ChatMessageType.send});
+  ChatMessage({
+    this.name,
+    this.text,
+    this.image,
+    this.option,
+    this.type = ChatMessageType.send,
+  });
 }
