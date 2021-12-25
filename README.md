@@ -1,6 +1,7 @@
 # App Chatbot IVY v2.0
 
-Flutter v2.5.1.
+ - Flutter v2.5.1. 
+-  IBM Watson Assistant v2
 
 ## Getting Started
 
