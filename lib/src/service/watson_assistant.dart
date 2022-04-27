@@ -117,9 +117,11 @@ class WatsonAssistantApiV2 {
       String _watsonResponseType;
 
       var getParsedJson = json.decode(receivedJson.body);
-      var _responseType = getParsedJson['output']['generic'][0]['suggestions'];
+      var _responseType =
+          getParsedJson['output']['generic'][0]['response_type'];
+
       _watsonResponseType = _responseType;
-      // print(getParsedJson['output']['generic'][0]['response_type']);
+
       switch (_responseType) {
         case 'text':
           _watsonResponseText = getParsedJson['output']['generic'][0]['text'];
